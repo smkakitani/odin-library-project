@@ -29,27 +29,17 @@ function addBookToLibrary(newBook) {
     myLibrary.push(newBook);
 }
 
-
-
 const bookContainer = document.querySelector('#book-container');
 
 function displayBook() {
     const book = myLibrary.map((element) => {
         createCard(element);
     });
-    // console.log(myLibrary);
-
-
-    // myLibrary.map(x => console.log(x.title));
 }
-
 displayBook();
 
-// const cardBook = document.getElementsByClassName('.display');
 
 // function to display books on card
-// const bookContainer = document.querySelector('#book-container');
-
 function createCard(currentBook) { //need to assign parameter!!!!!
     // create div
     const displayDiv = document.createElement('div');
@@ -82,4 +72,18 @@ function createCard(currentBook) { //need to assign parameter!!!!!
     }
 }
 
-// createCard();
+
+// function on button to show form
+const newBookButton = document.getElementById('new-book');
+newBookButton.addEventListener('click', showForm);
+
+function showForm() {
+    const bookForm = document.getElementById('form');
+    const formDisplayValue = getComputedStyle(bookForm).getPropertyValue('display');
+    console.log(formDisplayValue);
+    if (formDisplayValue === 'none') {
+        bookForm.style.display = 'block';
+    } else if (bookForm.style.display === 'block') {
+        bookForm.style.display = 'none';
+    }
+}
