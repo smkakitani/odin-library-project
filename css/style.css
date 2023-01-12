@@ -93,9 +93,8 @@ main > #book-container {
 main > #book-container .display {
     background-color: #00bf72;
     height: 250px;
-    width: max-content;
     border-radius: 20px;
-    margin-left: 15px;
+    margin: 15px;
     padding: 1em;
 
     display: grid;
