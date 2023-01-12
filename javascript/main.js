@@ -1,32 +1,31 @@
-let myLibrary = [
-    {
-        title: 'The Lord of the Rings',
-        author: 'J. R. R. Tolkien',
-        pages: '1178',
-        read: true,
-    }, 
+let myLibrary = [ 
     {
         title: 'Dune', 
         author: 'Frank Herbert',
         pages: '412',
-        read: false,
+        read: 'false',
     },
     {
         title: 'Story of the Eye',
         author: 'George Bataille',
         pages: '127',
-        read: true,
+        read: 'true',
     }
 ];
 
-function Book() {
-    // this.name = 
+function Book(title, author, pages, read) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
 }
 
 // newBook = {} user's input
 
-function addBookToLibrary(newBook) {
-    myLibrary.push(newBook);
+function addBookToLibrary(addBook) {
+    myLibrary.push(addBook);
+    
+    console.log(myLibrary);
 }
 
 const bookContainer = document.querySelector('#book-container');
@@ -65,9 +64,9 @@ function createCard(currentBook) { //need to assign parameter!!!!!
     const paraStatus = document.createElement('p');
     paraStatus.classList.add('status');
     displayDiv.appendChild(paraStatus);
-    if (currentBook.read === true) {
+    if (currentBook.read === 'true') {
         paraStatus.textContent = `finished reading!`
-    } else if (currentBook.read === false) {
+    } else if (currentBook.read === 'false') {
         paraStatus.textContent = `not read yet`
     }
 }
@@ -87,3 +86,24 @@ function showForm() {
         bookForm.style.display = 'none';
     }
 }
+
+
+// function to get user's book
+const submitButton = document.querySelector('form');
+submitButton.addEventListener('submit', getInput)
+// console.log(submitButton);
+
+function getInput(event) {
+    const inputTitle = document.querySelector('#title').value;
+    const inputAuthor = document.querySelector('#author').value;
+    const inputPages = document.querySelector('#pages').value;
+    const inputRead = document.querySelector('input[name="book-read"]:checked').value;
+
+    let newBook = new Book(inputTitle, inputAuthor,inputPages, inputRead);
+    addBookToLibrary(newBook);
+    createCard(newBook);
+    // console.log(newBook);
+    event.preventDefault();    
+}
+
+// getInput();

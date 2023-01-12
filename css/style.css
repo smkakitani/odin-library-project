@@ -53,7 +53,7 @@ table {
 }
 body {
     background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
-    height: 100vh;
+    height: 100%;
     font-family: 'Roboto', sans-serif;
     font-size: 1rem;
 
@@ -67,8 +67,10 @@ header {
 }
 
 h1 {
+    color: var(--color-dark02);
     text-align: center;
     font-size: 3rem;
+    padding: 1.5em 0;
 }
 
 /* main content */
@@ -191,7 +193,7 @@ main > #book-container {
 
 main > #book-container .display {
     background-color: var(--color-light01);
-    height: 250px;
+    height: 170px;
     border-radius: 20px;
     margin: 15px;
     padding: 1em;
