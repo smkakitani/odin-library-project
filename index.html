@@ -13,18 +13,36 @@
 </head>
 <body>
     <header>
-        <h1>Library Project</h1>
+        <h1>Library Project  FIX BG COLOR</h1>
     </header>
 
     <main>
         <button id="new-book" type="button">New Book</button>
         <div id="form">
             <form action="#">
-                <legend>Book to add</legend>
+                <legend>New Book</legend>
 
                 <div class="book-title">
                     <label for="title">Book's title: </label>
-                    <input type="text" id="title" name="book-title" pattern="[A-Za-z]{1,32}" placeholder="title" required>
+                    <input type="text" id="title" name="book-title" pattern="[A-Za-z]{1,32}" placeholder="The Lord of the Rings" required>
+                </div>
+                <div class="book-author">
+                    <label for="author">Book's author: </label>
+                    <input type="text" id="author" name="book-author" pattern="[A-Za-z]{1,32}" placeholder="J. R. R. Tolkien" required>
+                </div>
+                <div class="book-page">
+                    <label for="pages">How many pages? </label>
+                    <input type="text" id="pages" name="book-pages" pattern="[0-9]{1,4}" placeholder="1178" required>
+                </div>
+                <div class="book-read">
+                    <p>Did you read this book?</p>
+                    <input type="radio" id="true" name="book-read" value="yes">
+                    <label for="true">Yes</label>
+                    <input type="radio" id="false" name="book-read" value="no">
+                    <label for="false">No</label>
+                </div>
+                <div class="button-submit">
+                    <button type="submit">Submit</button>
                 </div>
 
             </form>
