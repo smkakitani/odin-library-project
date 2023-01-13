@@ -50,6 +50,7 @@ table {
     --color-medium: #008793;
     --color-dark01: #004d7a;
     --color-dark02: #051937;
+    --shadow: 2px 2px 5px var(--color-dark01);
 }
 body {
     background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);
@@ -105,7 +106,7 @@ main > #new-book:hover {
 }
 
 main > #form {
-    /* display: none; */
+    display: none;
 
     grid-column: 2;
     background-color: var(--color-medium);
@@ -115,6 +116,7 @@ main > #form {
 
     border: 2px solid var(--color-light01);
     border-radius: 15px;
+    box-shadow: var(--shadow), -2px -2px 5px var(--color-dark01);
 }
 
 main > #form > form {
@@ -145,7 +147,6 @@ input[type="text"] {
     font-style: italic;
 
     box-sizing: border-box;
-    /* border: 1px solid var(--color-dark02); */
     border: none;
     outline: none;
     border-radius: 2px;
@@ -197,6 +198,7 @@ main > #book-container .display {
     border-radius: 20px;
     margin: 15px;
     padding: 1em;
+    box-shadow: var(--shadow);
 
     display: grid;
     gap: 0.75em;
@@ -209,3 +211,20 @@ main > #book-container .display p:first-child {
     font-size: 1.5rem;
 }
 
+main > #book-container .display .button-remove {
+    background-color: var(--color-light02);
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.25rem;
+    /* font-weight: 900; */
+    /* text-transform: uppercase; */
+    padding: 0.3em;
+
+    border: none;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+}
+
+main > #book-container .display .button-remove:hover {
+    cursor: pointer;
+    color: var(--color-light01);
+}

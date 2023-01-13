@@ -20,8 +20,6 @@ function Book(title, author, pages, read) {
     this.read = read;
 }
 
-// newBook = {} user's input
-
 function addBookToLibrary(addBook) {
     myLibrary.push(addBook);
     
@@ -69,6 +67,12 @@ function createCard(currentBook) { //need to assign parameter!!!!!
     } else if (currentBook.read === 'false') {
         paraStatus.textContent = `not read yet`
     }
+
+    const createRemoveButton = document.createElement('button');
+    createRemoveButton.setAttribute('type', 'button');
+    createRemoveButton.classList.add('button-remove');
+    createRemoveButton.textContent = 'Remove';    
+    displayDiv.appendChild(createRemoveButton);
 }
 
 
@@ -90,8 +94,7 @@ function showForm() {
 
 // function to get user's book
 const submitButton = document.querySelector('form');
-submitButton.addEventListener('submit', getInput)
-// console.log(submitButton);
+submitButton.addEventListener('submit', getInput);
 
 function getInput(event) {
     const inputTitle = document.querySelector('#title').value;
@@ -106,4 +109,11 @@ function getInput(event) {
     event.preventDefault();    
 }
 
-// getInput();
+
+// removing book from display
+const removeButton = document.getElementsByClassName('button-remove');
+removeButton.addEventListener('click', removeBook);
+
+function removeBook(event) {
+    // remove currently book
+}
