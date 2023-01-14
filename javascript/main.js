@@ -22,18 +22,29 @@ function Book(title, author, pages, read) {
 
 function addBookToLibrary(addBook) {
     myLibrary.push(addBook);
-    
-    console.log(myLibrary);
+    // console.log(myLibrary);
 }
 
 const bookContainer = document.querySelector('#book-container');
 
 function displayBook() {
-    const book = myLibrary.map((element) => {
-        createCard(element);
-    });
+    myLibrary.map((element) => createCard(element));
 }
 displayBook();
+
+function updateLibrary(newLibrary) {
+    //remove card then update
+    const parentElements = document.getElementById('book-container')
+    // const removeElements = document.querySelectorAll('.display, .title, .author, .pages, .status, .button-remove');
+    // console.log(removeElements, parentElements);
+    // removeElements.forEach((ele) => parentElements.removeChild)
+    while (parentElements.firstChild) {
+        parentElements.removeChild(parentElements.firstChild);
+    }
+
+    newLibrary.map((element) => createCard(element));
+}
+// updateLibrary();
 
 
 // function to display books on card
@@ -111,9 +122,20 @@ function getInput(event) {
 
 
 // removing book from display
-const removeButton = document.getElementsByClassName('button-remove');
-removeButton.addEventListener('click', removeBook);
+const removeButton = document.getElementById('book-container');
+removeButton.addEventListener('click', function(e) {
+    // console.log(e.target.nodeName);
+    if (e.target && e.target.nodeName === 'BUTTON') {
+        let elementButton = e.target;
+        removeBook(elementButton);
+    }
+})
 
-function removeBook(event) {
-    // remove currently book
+function removeBook(e) {
+    const index = Array.from(removeButton).indexOf(e.target);
+    // console.log(index);
+
+    myLibrary.splice(index, 1);
+    updateLibrary(myLibrary);
+    // console.log(myLibrary);
 }
