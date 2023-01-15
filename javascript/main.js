@@ -18,6 +18,13 @@ function Book(title, author, pages, read) {
     this.author = author;
     this.pages = pages;
     this.read = read;
+    this.status = function() {
+        if (this.read === 'true') {
+            console.log('status: yep, read!');
+        } else if (this.read === 'false') {
+            console.log('status: not read!');
+        }
+    }
 }
 
 function addBookToLibrary(addBook) {
@@ -35,13 +42,10 @@ displayBook();
 function updateLibrary(newLibrary) {
     //remove card then update
     const parentElements = document.getElementById('book-container')
-    // const removeElements = document.querySelectorAll('.display, .title, .author, .pages, .status, .button-remove');
-    // console.log(removeElements, parentElements);
-    // removeElements.forEach((ele) => parentElements.removeChild)
+
     while (parentElements.firstChild) {
         parentElements.removeChild(parentElements.firstChild);
     }
-
     newLibrary.map((element) => createCard(element));
 }
 // updateLibrary();
@@ -49,9 +53,13 @@ function updateLibrary(newLibrary) {
 
 // function to display books on card
 function createCard(currentBook) { //need to assign parameter!!!!!
+    let indexOfBook = myLibrary.indexOf(currentBook);
+    console.log (indexOfBook);
+
     // create div
     const displayDiv = document.createElement('div');
     displayDiv.classList.add('display');
+    displayDiv.setAttribute('data-index', `${indexOfBook}`); //set data to div
     bookContainer.appendChild(displayDiv);
 
     // create p
@@ -70,20 +78,23 @@ function createCard(currentBook) { //need to assign parameter!!!!!
     displayDiv.appendChild(paraPages);
     paraPages.textContent = `${currentBook.pages} pages`;
 
-    const paraStatus = document.createElement('p');
-    paraStatus.classList.add('status');
-    displayDiv.appendChild(paraStatus);
+    // create buttons
+    const statusButton = document.createElement('button');
+    statusButton.setAttribute('type', 'button');
+    statusButton.classList.add('status-read');
+    displayDiv.appendChild(statusButton);
     if (currentBook.read === 'true') {
-        paraStatus.textContent = `finished reading!`
+        statusButton.textContent = `READ`;
     } else if (currentBook.read === 'false') {
-        paraStatus.textContent = `not read yet`
+        statusButton.textContent = 'NOT READ';
     }
 
-    const createRemoveButton = document.createElement('button');
-    createRemoveButton.setAttribute('type', 'button');
-    createRemoveButton.classList.add('button-remove');
-    createRemoveButton.textContent = 'Remove';    
-    displayDiv.appendChild(createRemoveButton);
+    const removeButton = document.createElement('button');
+    removeButton.setAttribute('type', 'button');
+    removeButton.setAttribute('data-index', `${indexOfBook}`); //set data to button
+    removeButton.classList.add('button-remove');
+    removeButton.textContent = 'Remove';    
+    displayDiv.appendChild(removeButton);
 }
 
 
@@ -94,7 +105,7 @@ newBookButton.addEventListener('click', showForm);
 function showForm() {
     const bookForm = document.getElementById('form');
     const formDisplayValue = getComputedStyle(bookForm).getPropertyValue('display');
-    console.log(formDisplayValue);
+    // console.log(formDisplayValue);
     if (formDisplayValue === 'none') {
         bookForm.style.display = 'block';
     } else if (bookForm.style.display === 'block') {
@@ -116,7 +127,6 @@ function getInput(event) {
     let newBook = new Book(inputTitle, inputAuthor,inputPages, inputRead);
     addBookToLibrary(newBook);
     createCard(newBook);
-    // console.log(newBook);
     event.preventDefault();    
 }
 
@@ -130,6 +140,7 @@ removeButton.addEventListener('click', function(e) {
         removeBook(elementButton);
     }
 })
+// console.log(Array.from(removeButton));
 
 function removeBook(e) {
     const index = Array.from(removeButton).indexOf(e.target);
