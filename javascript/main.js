@@ -1,16 +1,10 @@
 let myLibrary = [ 
-    {
+   /*  {
         title: 'Dune', 
         author: 'Frank Herbert',
         pages: '412',
         read: 'false',
-    },
-    {
-        title: 'Story of the Eye',
-        author: 'George Bataille',
-        pages: '127',
-        read: 'true',
-    }
+    }, */
 ];
 
 function Book(title, author, pages, read) {
@@ -18,14 +12,19 @@ function Book(title, author, pages, read) {
     this.author = author;
     this.pages = pages;
     this.read = read;
-    this.status = function() {
-        if (this.read === 'true') {
-            console.log('status: yep, read!');
-        } else if (this.read === 'false') {
-            console.log('status: not read!');
-        }
+}
+
+Book.prototype.status = function() {
+    if (this.read === 'true') {
+        this.read = 'false';
+    } else if (this.read === 'false') {
+        this.read = 'true';
     }
 }
+
+//books to test object constructor
+myLibrary[0] = new Book('Story of the Eye', 'George Bataille', '127', 'true');
+myLibrary[1] = new Book('Dune', 'Frank Herbert', '412', 'false');
 
 function addBookToLibrary(addBook) {
     myLibrary.push(addBook);
@@ -48,13 +47,12 @@ function updateLibrary(newLibrary) {
     }
     newLibrary.map((element) => createCard(element));
 }
-// updateLibrary();
 
 
 // function to display books on card
 function createCard(currentBook) { //need to assign parameter!!!!!
     let indexOfBook = myLibrary.indexOf(currentBook);
-    console.log (indexOfBook);
+    // console.log (indexOfBook);
 
     // create div
     const displayDiv = document.createElement('div');
@@ -81,6 +79,7 @@ function createCard(currentBook) { //need to assign parameter!!!!!
     // create buttons
     const statusButton = document.createElement('button');
     statusButton.setAttribute('type', 'button');
+    statusButton.setAttribute('data-index', `${indexOfBook}`); //set data to button
     statusButton.classList.add('status-read');
     displayDiv.appendChild(statusButton);
     if (currentBook.read === 'true') {
@@ -105,7 +104,7 @@ newBookButton.addEventListener('click', showForm);
 function showForm() {
     const bookForm = document.getElementById('form');
     const formDisplayValue = getComputedStyle(bookForm).getPropertyValue('display');
-    // console.log(formDisplayValue);
+
     if (formDisplayValue === 'none') {
         bookForm.style.display = 'block';
     } else if (bookForm.style.display === 'block') {
@@ -131,22 +130,27 @@ function getInput(event) {
 }
 
 
-// removing book from display
-const removeButton = document.getElementById('book-container');
-removeButton.addEventListener('click', function(e) {
-    // console.log(e.target.nodeName);
-    if (e.target && e.target.nodeName === 'BUTTON') {
-        let elementButton = e.target;
-        removeBook(elementButton);
+// button removing book from display / change status button
+const bookButton = document.getElementById('book-container');
+bookButton.addEventListener('click', function(e) {
+    const dataIndex = e.target.dataset.index;
+    const eventClass = e.target.getAttribute('class');
+    const myTarget = e.target;
+
+    if (eventClass === 'button-remove' && isNaN(dataIndex) === false) {
+        myLibrary.splice(dataIndex, 1);
+        updateLibrary(myLibrary);
+    } else if (eventClass === 'status-read' && isNaN(dataIndex) === false) {
+        //change status in myLibrary
+        myLibrary[dataIndex].status();
+
+        //show new status button text
+        if (myTarget.textContent === 'READ') {
+            myTarget.textContent = 'NOT READ';
+        } else if (myTarget.textContent === 'NOT READ') {
+            myTarget.textContent = 'READ';
+        }
+    } else {
+        return
     }
-})
-// console.log(Array.from(removeButton));
-
-function removeBook(e) {
-    const index = Array.from(removeButton).indexOf(e.target);
-    // console.log(index);
-
-    myLibrary.splice(index, 1);
-    updateLibrary(myLibrary);
-    // console.log(myLibrary);
-}
+});
